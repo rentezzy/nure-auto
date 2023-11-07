@@ -16,6 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "./button";
+import { AddElement } from "../shared/AddElement";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -52,6 +53,9 @@ export function DataTable<TData, TValue>({
                     </TableHead>
                   );
                 })}
+                <TableHead className="w-2">
+                  <AddElement />
+                </TableHead>
               </TableRow>
             ))}
           </TableHeader>

@@ -18,7 +18,7 @@ export const PrismaService = {
   getUsers() {
     return this.prismClient.user.findMany();
   },
-  addUser(email:string,password:string) {
+  addUser(email: string, password: string) {
     return this.prismClient.user.create({
       data: {
         email,
