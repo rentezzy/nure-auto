@@ -1,4 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { addCar } from "./server-actions/addRow";
+import { PrismaClient, Car, CarType } from "@prisma/client";
 
 const prismaClientSingleton = () => {
   return new PrismaClient();
@@ -18,12 +19,34 @@ export const PrismaService = {
   getUsers() {
     return this.prismClient.user.findMany();
   },
+  getUsersId() {
+    return this.prismClient.user.findMany({ select: { userId: true } });
+  },
+  getCars() {
+    return this.prismClient.car.findMany();
+  },
+  getCarTypes() {
+    return this.prismClient.carType.findMany();
+  },
+  getCarTypesId() {
+    return this.prismClient.carType.findMany({ select: { carTypeId: true } });
+  },
   addUser(email: string, password: string) {
     return this.prismClient.user.create({
       data: {
         email,
         password,
       },
+    });
+  },
+  addCar(car: Omit<Car, "carId">) {
+    return this.prismClient.car.create({
+      data: car,
+    });
+  },
+  addCarType(carType: Omit<CarType, "carTypeId">) {
+    return this.prismClient.carType.create({
+      data: carType,
     });
   },
 };

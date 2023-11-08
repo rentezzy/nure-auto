@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/table";
 import { Button } from "./button";
 import { AddElement } from "../shared/AddElement";
+import { useLayoutEffect } from "react";
+import { DataTablePagination } from "./table-elements";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -33,7 +35,7 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-
+  useLayoutEffect(() => table.setPageSize(5), []);
   return (
     <div>
       <div className="rounded-md border">
@@ -89,23 +91,8 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+      <div className="mt-2">
+        <DataTablePagination table={table} />
       </div>
     </div>
   );

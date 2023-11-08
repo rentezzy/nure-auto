@@ -31,20 +31,20 @@ model Car {
 }
 
 model CarType {
-  carTypeId     Int           @id @default(autoincrement()) @map("car_type_id")
-  brand         String
-  model         String
-  beginYear     Int
-  endYear       Int
-  engine        Float
-  transimission Transimission
-  gasoline      Gasoline
-  Car           Car?
+  carTypeId    Int          @id @default(autoincrement()) @map("car_type_id")
+  brand        String
+  model        String
+  beginYear    Int
+  endYear      Int
+  engine       Float
+  transmission Transmission
+  gasoline     Gasoline
+  Car          Car?
 
   @@map("car_type")
 }
 
-enum Transimission {
+enum Transmission {
   Mechanical
   Automatic
 }

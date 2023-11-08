@@ -1,3 +1,4 @@
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -6,20 +7,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "../ui/button";
-import { Plus } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AddUserForm } from "./AddElementForms";
+import { Plus } from "lucide-react";
+import { Button } from "../ui/button";
+import { AddCarForm, AddCarTypeForm, AddUserForm } from "./AddElementForms";
+
 export const AddElement = () => {
   return (
     <Dialog>
@@ -40,7 +32,6 @@ export const AddElement = () => {
     </Dialog>
   );
 };
-
 function AddTabs() {
   return (
     <Tabs defaultValue="user">
@@ -51,11 +42,22 @@ function AddTabs() {
       </TabsList>
       <TabsContent value="user">
         <Card>
-          <CardHeader>
-            <CardTitle>User</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
+          <CardContent className="p-4">
             <AddUserForm />
+          </CardContent>
+        </Card>
+      </TabsContent>
+      <TabsContent value="car">
+        <Card>
+          <CardContent className="p-4">
+            <AddCarForm />
+          </CardContent>
+        </Card>
+      </TabsContent>
+      <TabsContent value="carType">
+        <Card>
+          <CardContent className="p-4">
+            <AddCarTypeForm />
           </CardContent>
         </Card>
       </TabsContent>

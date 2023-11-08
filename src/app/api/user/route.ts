@@ -7,3 +7,8 @@ export const POST = async (req: Request) => {
   const user = await PrismaService.addUser(email, password);
   return Response.json({ user });
 };
+
+export const GET = async (req: Request) => {
+  const usersId = await PrismaService.getUsersId();
+  return Response.json({ usersId });
+};
