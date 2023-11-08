@@ -3,13 +3,7 @@ import { ControllerRenderProps } from "react-hook-form";
 import { FormControl, FormItem, FormLabel, FormMessage } from "../ui/form";
 
 import { Input } from "../ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 
 export const CarTypeBrandSelect = <T extends string>({
   field,
@@ -28,9 +22,7 @@ export const CarTypeBrandSelect = <T extends string>({
               value={field.value}
               placeholder="Brand"
             />
-            <SelectTrigger className="w-[40px]">
-              <SelectValue className="w-[40px]" />
-            </SelectTrigger>
+            <SelectTrigger className="w-[40px]" />
           </div>
         </FormControl>
         <SelectContent>
@@ -65,9 +57,7 @@ export const CarTypeModelSelect = <T extends string>({
               value={field.value}
               placeholder="Model"
             />
-            <SelectTrigger className="w-[40px]">
-              <SelectValue className="w-[40px]" />
-            </SelectTrigger>
+            <SelectTrigger className="w-[40px]" />
           </div>
         </FormControl>
         <SelectContent>

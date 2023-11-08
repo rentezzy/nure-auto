@@ -14,7 +14,7 @@ export const UserEditForm = ({ id }: { id?: string }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>
+        <Button className="p-0 w-[30px] h-[30px]">
           <Pencil />
         </Button>
       </DialogTrigger>
@@ -35,7 +35,7 @@ export const CarEditForm = ({ id }: { id?: string }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>
+        <Button className="p-0 w-[30px] h-[30px]">
           <Pencil />
         </Button>
       </DialogTrigger>
@@ -56,7 +56,7 @@ export const CarTypeEditForm = ({ id }: { id?: string }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>
+        <Button className="p-0 w-[30px] h-[30px]">
           <Pencil />
         </Button>
       </DialogTrigger>

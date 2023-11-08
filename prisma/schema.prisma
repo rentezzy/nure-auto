@@ -11,7 +11,7 @@ model User {
   userId   Int    @id @default(autoincrement()) @map("user_Id")
   email    String @unique
   password String
-  Car      Car?
+  Car      Car[]
 
   @@map("user")
 }
@@ -24,8 +24,8 @@ model Car {
   buyAt     DateTime @map("buy_at")
   user      User     @relation(fields: [userId], references: [userId])
   carType   CarType  @relation(fields: [carTypeId], references: [carTypeId])
-  userId    Int      @unique @map("user_id")
-  carTypeId Int      @unique @map("car_type_id")
+  userId    Int      @map("user_id")
+  carTypeId Int      @map("car_type_id")
 
   @@map("car")
 }
@@ -39,7 +39,7 @@ model CarType {
   engine       Float
   transmission Transmission
   gasoline     Gasoline
-  Car          Car?
+  Car          Car[]
 
   @@map("car_type")
 }

@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -13,10 +12,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { useGetCarTypes } from "@/hooks/useGetCarTypesId";
 import { useGetUsersId } from "@/hooks/useGetUsersId";
+import { cn } from "@/lib/utils";
 import { addCar, addCarType, addUser } from "@/services/server-actions/addRow";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { Calendar } from "../ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import {
   Select,
   SelectContent,
@@ -25,10 +28,6 @@ import {
   SelectValue,
 } from "../ui/select";
 import { CarTypeBrandSelect, CarTypeModelSelect } from "./FormCommon";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { cn } from "@/lib/utils";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "../ui/calendar";
 const userFormSchema = z
   .object({
     email: z.string().min(2).max(50).email("Must be email"),
@@ -63,7 +62,7 @@ export const AddUserForm = () => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="email" {...field} />
+                <Input placeholder="Email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -76,7 +75,7 @@ export const AddUserForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="password" {...field} />
+                <Input placeholder="Password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -94,7 +93,7 @@ const carFormSchema = z
     mileage: z.number().min(0).max(1_000_000),
     year: z.number().min(1920).max(2023),
     userId: z.string(),
-    price: z.number().min(0).max(1_000_000_000),
+    price: z.number().min(1).max(1_000_000_000),
   })
   .required();
 
@@ -103,6 +102,12 @@ export const AddCarForm = () => {
   const carTypesId = useGetCarTypes();
   const form = useForm<z.infer<typeof carFormSchema>>({
     resolver: zodResolver(carFormSchema),
+    defaultValues: {
+      buyAt: new Date(Date.now() - 2000),
+      mileage: 0,
+      price: 0,
+      year: 2000,
+    },
   });
 
   async function onSubmit(values: z.infer<typeof carFormSchema>) {
@@ -112,7 +117,6 @@ export const AddCarForm = () => {
         carTypeId: +values.carTypeId,
         userId: +values.userId,
       });
-      console.log(1);
       form.reset();
     } catch (error) {}
   }
@@ -188,7 +192,7 @@ export const AddCarForm = () => {
                     <Button
                       variant={"outline"}
                       className={cn(
-                        " pl-3 text-left font-normal",
+                        "pl-3 text-left font-normal",
                         !field.value && "text-muted-foreground"
                       )}
                     >
@@ -301,6 +305,15 @@ const carTypeFormSchema = z
 export const AddCarTypeForm = () => {
   const form = useForm<z.infer<typeof carTypeFormSchema>>({
     resolver: zodResolver(carTypeFormSchema),
+    defaultValues: {
+      beginYear: 1920,
+      endYear: 2023,
+      engine: 0,
+      model: "",
+      brand: "",
+      transmission: "Automatic",
+      gasoline: "A95",
+    },
   });
 
   async function onSubmit(values: z.infer<typeof carTypeFormSchema>) {

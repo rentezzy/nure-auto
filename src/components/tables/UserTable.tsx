@@ -18,11 +18,12 @@ const columns: ColumnDef<User>[] = [
   },
   {
     id: "edit-buttons",
+
     cell(props) {
       const id: string | undefined = props.row.getValue("userId");
 
       return (
-        <div className="w-2">
+        <div className="flex justify-end">
           <UserEditForm id={id} />
         </div>
       );

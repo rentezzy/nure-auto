@@ -23,6 +23,14 @@ const columns: ColumnDef<Car>[] = [
   {
     accessorKey: "buyAt",
     header: "buy_at",
+    cell: ({ row }) => {
+      const buyAt = new Date(row.getValue("buyAt"));
+      const formatted = `${buyAt.getFullYear()}-${
+        buyAt.getMonth() + 1
+      }-${buyAt.getDate()}`;
+
+      return <div>{formatted}</div>;
+    },
   },
   {
     accessorKey: "userId",
@@ -35,10 +43,10 @@ const columns: ColumnDef<Car>[] = [
   {
     id: "edit-buttons",
     cell(props) {
-      const id: string | undefined = props.row.getValue("userId");
+      const id: string | undefined = props.row.getValue("carId");
 
       return (
-        <div className="w-2">
+        <div className="flex justify-end">
           <CarEditForm id={id} />
         </div>
       );
@@ -46,6 +54,6 @@ const columns: ColumnDef<Car>[] = [
   },
 ];
 
-export const UserTable = ({ cars }: { cars: Car[] }) => {
+export const CarTable = ({ cars }: { cars: Car[] }) => {
   return <DataTable columns={columns} data={cars} />;
 };

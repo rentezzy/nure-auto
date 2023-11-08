@@ -33,8 +33,8 @@ const columns: ColumnDef<CarType>[] = [
     header: "gasoline",
   },
   {
-    accessorKey: "transimission",
-    header: "transimission",
+    accessorKey: "transmission",
+    header: "transmission",
   },
   {
     id: "edit-buttons",
@@ -42,7 +42,7 @@ const columns: ColumnDef<CarType>[] = [
       const id: string | undefined = props.row.getValue("carTypeId");
 
       return (
-        <div className="w-2">
+        <div className="flex justify-end">
           <CarTypeEditForm id={id} />
         </div>
       );
