@@ -22,8 +22,8 @@ model Car {
   mileage   Int
   price     Int
   buyAt     DateTime @map("buy_at")
-  user      User     @relation(fields: [userId], references: [userId])
-  carType   CarType  @relation(fields: [carTypeId], references: [carTypeId])
+  user      User     @relation(fields: [userId], references: [userId], onUpdate: NoAction, onDelete: Cascade)
+  carType   CarType  @relation(fields: [carTypeId], references: [carTypeId], onUpdate: NoAction, onDelete: Cascade)
   userId    Int      @map("user_id")
   carTypeId Int      @map("car_type_id")
 

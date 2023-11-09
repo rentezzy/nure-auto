@@ -89,7 +89,7 @@ const carTypeFormSchema = z
     model: z.string(),
     beginYear: z.number().min(1920).max(2023),
     endYear: z.number().min(1920).max(2023),
-    engine: z.number().min(0).max(10),
+    engine: z.number().min(1).max(10),
     gasoline: z.enum(["D", "A92", "A95", "A98", "A100"]),
     transmission: z.enum(["Mechanical", "Automatic"]),
   })
@@ -100,7 +100,7 @@ export const AddCarTypeForm = () => {
     defaultValues: {
       beginYear: 1920,
       endYear: 2023,
-      engine: 0,
+      engine: 1,
       model: "",
       brand: "",
       transmission: "Automatic",

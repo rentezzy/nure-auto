@@ -3,7 +3,7 @@ import { Car } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { CarEditForm } from "../shared/EditForm";
+import { CarEditForm } from "../shared/EditElement";
 import { Button } from "../ui/button";
 import { DataTable } from "../ui/dataTable";
 const columns: ColumnDef<Car>[] = [
