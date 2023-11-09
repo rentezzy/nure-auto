@@ -1,5 +1,5 @@
 import { addCar } from "./server-actions/addRow";
-import { PrismaClient, Car, CarType } from "@prisma/client";
+import { PrismaClient, Car, CarType, User } from "@prisma/client";
 
 const prismaClientSingleton = () => {
   return new PrismaClient();
@@ -31,12 +31,9 @@ export const PrismaService = {
   getCarTypesId() {
     return this.prismClient.carType.findMany({ select: { carTypeId: true } });
   },
-  addUser(email: string, password: string) {
+  addUser(user: Omit<User, "userId">) {
     return this.prismClient.user.create({
-      data: {
-        email,
-        password,
-      },
+      data: user,
     });
   },
   addCar(car: Omit<Car, "carId">) {

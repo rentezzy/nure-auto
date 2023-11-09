@@ -1,11 +1,11 @@
 "use server";
 
-import { Car, CarType } from "@prisma/client";
+import { Car, CarType, User } from "@prisma/client";
 import { PrismaService } from "../Prisma";
 
-export const addUser = async (email: string, password: string) => {
+export const addUser = async (user: Omit<User, "userId">) => {
   try {
-    return await PrismaService.addUser(email, password);
+    return await PrismaService.addUser(user);
   } catch (error) {
     return Promise.reject("Error");
   }
