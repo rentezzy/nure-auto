@@ -1,7 +1,10 @@
 "use client";
 import { User } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 import { UserEditForm } from "../shared/EditForm";
+import { Button } from "../ui/button";
 import { DataTable } from "../ui/dataTable";
 const columns: ColumnDef<User>[] = [
   {
@@ -23,8 +26,13 @@ const columns: ColumnDef<User>[] = [
       const id: string | undefined = props.row.getValue("userId");
 
       return (
-        <div className="flex justify-end">
+        <div className="flex justify-end items-center">
           <UserEditForm id={id} />
+          <Button variant="link" asChild>
+            <Link href={`/user/${id}`}>
+              <ChevronRight />
+            </Link>
+          </Button>
         </div>
       );
     },

@@ -1,7 +1,10 @@
 "use client";
 import { Car } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 import { CarEditForm } from "../shared/EditForm";
+import { Button } from "../ui/button";
 import { DataTable } from "../ui/dataTable";
 const columns: ColumnDef<Car>[] = [
   {
@@ -46,8 +49,13 @@ const columns: ColumnDef<Car>[] = [
       const id: string | undefined = props.row.getValue("carId");
 
       return (
-        <div className="flex justify-end">
+        <div className="flex justify-end items-center">
           <CarEditForm id={id} />
+          <Button variant="link" asChild>
+            <Link href={`/car/${id}`}>
+              <ChevronRight />
+            </Link>
+          </Button>
         </div>
       );
     },
