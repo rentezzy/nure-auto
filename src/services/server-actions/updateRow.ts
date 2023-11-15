@@ -27,7 +27,6 @@ export const updateCar = async (carId: number, car: Omit<Car, "carId">) => {
       data: car,
     });
   } catch (error) {
-    console.log(error);
     return Promise.reject("Error");
   }
 };

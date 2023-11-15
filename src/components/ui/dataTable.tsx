@@ -91,9 +91,11 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="mt-2">
-        <DataTablePagination table={table} />
-      </div>
+      {data.length > 1 && (
+        <div className="mt-2">
+          <DataTablePagination table={table} />
+        </div>
+      )}
     </div>
   );
 }

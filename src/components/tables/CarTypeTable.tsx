@@ -6,6 +6,7 @@ import Link from "next/link";
 import { CarTypeEditForm } from "../shared/EditElement";
 import { Button } from "../ui/button";
 import { DataTable } from "../ui/dataTable";
+import { CarTypeDeleteForm } from "../shared/DeleteElement";
 const columns: ColumnDef<CarType>[] = [
   {
     accessorKey: "carTypeId",
@@ -45,8 +46,9 @@ const columns: ColumnDef<CarType>[] = [
       const id: string | undefined = props.row.getValue("carTypeId");
 
       return (
-        <div className="flex justify-end items-center">
+        <div className="flex justify-end items-center gap-2">
           <CarTypeEditForm id={id} />
+          <CarTypeDeleteForm id={id} />
           <Button variant="link" asChild>
             <Link href={`/car-type/${id}`}>
               <ChevronRight />

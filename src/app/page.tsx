@@ -1,3 +1,4 @@
+import { RawSql } from "@/components/shared/RawSqlDialog";
 import { CarTable } from "@/components/tables/CarTable";
 import { CarTypeTable } from "@/components/tables/CarTypeTable";
 import { UserTable } from "@/components/tables/UserTable";
@@ -34,6 +35,7 @@ export default async function Home() {
             <CarTypeTable carTypes={carTypes} />
           </CardContent>
         </Card>
+        <RawSql />
       </section>
     </main>
   );
