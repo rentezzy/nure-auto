@@ -19,8 +19,11 @@ export const PrismaService = {
   getUsers() {
     return this.prismClient.user.findMany();
   },
-  getUser(email: string) {
+  getUserByEmail(email: string) {
     return this.prismClient.user.findUnique({ where: { email } });
+  },
+  getUser(id: number) {
+    return this.prismClient.user.findUnique({ where: { userId: id } });
   },
   getUsersId() {
     return this.prismClient.user.findMany({ select: { userId: true } });
