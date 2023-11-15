@@ -1,5 +1,4 @@
-import { addCar } from "./server-actions/addRow";
-import { PrismaClient, Car, CarType, User } from "@prisma/client";
+import { Car, CarType, PrismaClient, User } from "@prisma/client";
 
 const prismaClientSingleton = () => {
   return new PrismaClient();

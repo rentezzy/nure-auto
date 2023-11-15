@@ -29,7 +29,7 @@ export const SignInForm = () => {
       });
       const data = await res.json();
       if ("error" in data) throw new Error(data.error);
-      router.push("/");
+      router.push("/dashboard");
     } catch (error) {
       if (error && typeof error == "object" && "message" in error)
         form.setError("root", {
@@ -69,7 +69,7 @@ export const SignUpForm = () => {
       });
       const data = await res.json();
       if ("error" in data) throw new Error(data.error);
-      router.push("/");
+      router.push("/dashboard");
     } catch (error) {
       if (error && typeof error == "object" && "message" in error)
         form.setError("root", {

@@ -1,3 +1,4 @@
+import { Header } from "@/components/shared/Header";
 import { UserProvider } from "@/services/UserProvider";
 
 export default function RootLayout({
@@ -5,5 +6,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <UserProvider>{children}</UserProvider>;
+  return (
+    <>
+      <Header />
+      <UserProvider>{children}</UserProvider>
+    </>
+  );
 }
