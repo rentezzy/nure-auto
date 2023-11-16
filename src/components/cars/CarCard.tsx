@@ -1,33 +1,32 @@
-import { PrismaService } from "@/services/Prisma";
-import { Car } from "@prisma/client";
+import { Car, CarType } from "@prisma/client";
 import { Car as CarIcon } from "lucide-react";
-import Link from "next/link";
+import { TableCell } from "../ui/table";
 
-export const CarCard = async ({ car }: { car: Car }) => {
-  const carType = await PrismaService.getCarType(car.carTypeId);
-  if (!carType) return <div>Something went wrong with this car.</div>;
+export const CarCard = ({ car }: { car: Car & { carType: CarType } }) => {
   const buyAt = new Date(car.buyAt);
   const formatted = `${buyAt.getFullYear()}-${
     buyAt.getMonth() + 1
   }-${buyAt.getDate()}`;
   return (
-    <Link href={`/my-car/${car.carId}`}>
-      <div className="flex w-full gap-2 border-b p-2 items-center hover:scale-[1.001] transition-all">
+    <>
+      <TableCell className="flex items-center gap-2">
         <CarIcon size="30" />
         <div>
-          <p className="whitespace-nowrap">{`${carType.brand} ${carType.model}`}</p>
+          <p className="whitespace-nowrap">{`${car.carType.brand} ${car.carType.model}`}</p>
         </div>
-        <div className="flex-grow-1 w-full flex justify-end gap-4">
-          <div className="min-w-[200px]">
-            <p>Year: {car.year}</p>
-            <p>Base price: {car.price}$</p>
-          </div>
-          <div className="min-w-[200px]">
-            <p>Mileage: {car.mileage}km</p>
-            <p>Bought at: {formatted}</p>
-          </div>
+      </TableCell>
+      <TableCell className="flex-grow-1 w-full flex justify-end">
+        <div className="min-w-[200px]">
+          <p>Mileage: {car.mileage}km</p>
+          <p>Year: {car.year}</p>
         </div>
-      </div>
-    </Link>
+      </TableCell>
+      <TableCell>
+        <div className="min-w-[200px]">
+          <p>Bought at: {formatted}</p>
+          <p>Base price: {car.price}$</p>
+        </div>
+      </TableCell>
+    </>
   );
 };

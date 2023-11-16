@@ -1,5 +1,5 @@
-import { CarCard } from "@/components/cars/CarCard";
 import { Button } from "@/components/ui/button";
+import { CarDataTable } from "@/components/ui/carDataTable";
 import { PrismaService } from "@/services/Prisma";
 import { getUser } from "@/services/getUser";
 import { Plus } from "lucide-react";
@@ -12,7 +12,7 @@ const Dashboard = async () => {
   const cars = await PrismaService.getCarsByUserId(user.userId);
   return (
     <section className="container mx-auto space-x-2">
-      <div className="w-full border-b py-4">
+      <div className="w-full py-4">
         <Button variant="link" asChild>
           <Link href="/create-car">
             <Plus />
@@ -21,11 +21,7 @@ const Dashboard = async () => {
         </Button>
       </div>
       <div>
-        {cars.length === 0 ? (
-          <p>No cars yet</p>
-        ) : (
-          cars.map((car) => <CarCard car={car} key={car.carId} />)
-        )}
+        {cars.length === 0 ? <p>No cars yet</p> : <CarDataTable data={cars} />}
       </div>
     </section>
   );

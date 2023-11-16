@@ -1,4 +1,5 @@
 "use client";
+import { addCar } from "@/services/server-actions/addRow";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -39,22 +40,10 @@ export const CreateCarForm = ({ uid }: { uid: number }) => {
       });
       return;
     }
-    form.reset();
-    console.log(values);
     try {
-      // const res = await fetch("/api/auth/sign-in", {
-      //   method: "POST",
-      //   body: JSON.stringify(values),
-      // });
-      // const data = await res.json();
-      // if ("error" in data) throw new Error(data.error);
-      // router.push("/dashboard");
-    } catch (error) {
-      // if (error && typeof error == "object" && "message" in error)
-      //   form.setError("root", {
-      //     message: String(error.message) || "Something went wrong.",
-      //   });
-    }
+      await addCar(values);
+      router.push("/dashboard");
+    } catch (error) {}
   }
   return (
     <Form {...form}>
@@ -63,9 +52,6 @@ export const CreateCarForm = ({ uid }: { uid: number }) => {
           <CarFormMini control={form.control} />
         </div>
         <CarTypeSelect control={form.control} />
-        {/* <p className="text-center text-red-600">
-          {form.formState.errors.root?.message}
-        </p> */}
         <Button type="submit" className="w-full">
           Add car!
         </Button>
