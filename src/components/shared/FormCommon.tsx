@@ -60,6 +60,72 @@ export const CarForm = ({ control }: { control: Control<any, any> }) => {
   const carTypesId = useGetCarTypes();
   return (
     <>
+      <CarFormMini control={control} />
+      <FormField
+        control={control}
+        name="userId"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>User Id</FormLabel>
+            <Select
+              onValueChange={field.onChange}
+              defaultValue={`${field.value}`}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a user id" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {usersId &&
+                  usersId.map((userId) => (
+                    <SelectItem key={userId.userId} value={`${userId.userId}`}>
+                      {userId.userId}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={control}
+        name="carTypeId"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Car type Id</FormLabel>
+            <Select
+              onValueChange={field.onChange}
+              defaultValue={`${field.value}`}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a car type id" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {carTypesId &&
+                  carTypesId.map((carTypeId) => (
+                    <SelectItem
+                      key={carTypeId.carTypeId}
+                      value={`${carTypeId.carTypeId}`}
+                    >
+                      {carTypeId.carTypeId}
+                    </SelectItem>
+                  ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </>
+  );
+};
+export const CarFormMini = ({ control }: { control: Control<any, any> }) => {
+  return (
+    <>
       <FormField
         control={control}
         name="mileage"
@@ -121,7 +187,7 @@ export const CarForm = ({ control }: { control: Control<any, any> }) => {
         control={control}
         name="buyAt"
         render={({ field }) => (
-          <FormItem className="flex flex-col">
+          <FormItem className="flex flex-col mt-2">
             <FormLabel>Buy at</FormLabel>
             <Popover>
               <PopoverTrigger asChild>
@@ -156,65 +222,6 @@ export const CarForm = ({ control }: { control: Control<any, any> }) => {
                 />
               </PopoverContent>
             </Popover>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={control}
-        name="userId"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>User Id</FormLabel>
-            <Select
-              onValueChange={field.onChange}
-              defaultValue={`${field.value}`}
-            >
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a user id" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                {usersId &&
-                  usersId.map((userId) => (
-                    <SelectItem key={userId.userId} value={`${userId.userId}`}>
-                      {userId.userId}
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={control}
-        name="carTypeId"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Car type Id</FormLabel>
-            <Select
-              onValueChange={field.onChange}
-              defaultValue={`${field.value}`}
-            >
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a car type id" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                {carTypesId &&
-                  carTypesId.map((carTypeId) => (
-                    <SelectItem
-                      key={carTypeId.carTypeId}
-                      value={`${carTypeId.carTypeId}`}
-                    >
-                      {carTypeId.carTypeId}
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
             <FormMessage />
           </FormItem>
         )}
@@ -296,16 +303,8 @@ export const CarTypeModelSelect = <T extends string>({
 export const CarTypeForm = ({ control }: { control: Control<any, any> }) => {
   return (
     <>
-      <FormField
-        control={control}
-        name="brand"
-        render={CarTypeBrandSelect}
-      />
-      <FormField
-        control={control}
-        name="model"
-        render={CarTypeModelSelect}
-      />
+      <FormField control={control} name="brand" render={CarTypeBrandSelect} />
+      <FormField control={control} name="model" render={CarTypeModelSelect} />
       <FormField
         control={control}
         name="beginYear"
