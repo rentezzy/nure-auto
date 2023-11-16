@@ -8,30 +8,44 @@ datasource db {
 }
 
 model User {
-  userId   Int    @id @default(autoincrement()) @map("user_Id")
-  email    String @unique
-  password String
-  Car      Car[]
+  userId       Int            @id @default(autoincrement()) @map("user_Id")
+  email        String         @unique
+  password     String
+  Car          Car[]
+  Notification Notification[]
 
   @@map("user")
 }
 
+model Notification {
+  notificationId Int      @id @default(autoincrement()) @map("notification_id")
+  sendAt         DateTime @default(now()) @map("send_at")
+  title          String
+  text           String
+  User           User     @relation(fields: [userId], references: [userId], onUpdate: Cascade, onDelete: Cascade)
+  userId         Int      @map("user_id")
+
+  @@map("notification")
+}
+
 model Car {
-  carId     Int      @id @default(autoincrement()) @map("car_id")
+  carId     Int        @id @default(autoincrement()) @map("car_id")
   year      Int
   mileage   Int
   price     Int
-  buyAt     DateTime @map("buy_at")
-  user      User     @relation(fields: [userId], references: [userId], onUpdate: NoAction, onDelete: Cascade)
-  carType   CarType  @relation(fields: [carTypeId], references: [carTypeId], onUpdate: NoAction, onDelete: Cascade)
-  userId    Int      @map("user_id")
-  carTypeId Int      @map("car_type_id")
+  buyAt     DateTime   @map("buy_at")
+  user      User       @relation(fields: [userId], references: [userId], onUpdate: Cascade, onDelete: Cascade)
+  carType   CarType    @relation(fields: [carTypeId], references: [carTypeId], onUpdate: Cascade, onDelete: Cascade)
+  userId    Int        @map("user_id")
+  carTypeId Int        @map("car_type_id")
+  CarSpent  CarSpent[]
+  Usage     Usage[]
 
   @@map("car")
 }
 
 model CarType {
-  carTypeId    Int          @id @default(autoincrement()) @map("car_type_id")
+  carTypeId    Int           @id @default(autoincrement()) @map("car_type_id")
   brand        String
   model        String
   beginYear    Int
@@ -40,8 +54,49 @@ model CarType {
   transmission Transmission
   gasoline     Gasoline
   Car          Car[]
+  Maintenance  Maintenance[]
 
   @@map("car_type")
+}
+
+model Maintenance {
+  maintenanceId Int    @id @default(autoincrement()) @map("maintenance_id")
+  condition     Int
+  price         Int
+  decription    String
+
+  CarType   CarType?   @relation(fields: [carTypeId], references: [carTypeId], onUpdate: Cascade, onDelete: Cascade)
+  carTypeId Int        @map("car_type_id")
+  CarSpent  CarSpent[]
+
+  @@map("maintenance")
+}
+
+model CarSpent {
+  carSpentId    Int          @id @default(autoincrement()) @map("car_spent_id")
+  type          SpentType
+  price         Int
+  amount        Int
+  description   String
+  date          DateTime
+  Car           Car          @relation(fields: [carId], references: [carId], onUpdate: Cascade, onDelete: Cascade)
+  carId         Int          @map("car_id")
+  Maintenance   Maintenance? @relation(fields: [maintenanceId], references: [maintenanceId], onUpdate: Cascade, onDelete: Cascade)
+  maintenanceId Int?         @map("maintenance_id")
+
+  @@map("car_spent")
+}
+
+model Usage {
+  usageId         Int   @id @default(autoincrement()) @map("usage_id")
+  weekNumber      Int   @map("week_number")
+  year            Int
+  mileage         Int
+  averageGasoline Float @map("average_gasoline")
+  Car             Car   @relation(fields: [carId], references: [carId], onUpdate: Cascade, onDelete: Cascade)
+  carId           Int   @map("car_id")
+
+  @@map("usage")
 }
 
 enum Transmission {
@@ -55,4 +110,12 @@ enum Gasoline {
   A95
   A98
   A100
+}
+
+enum SpentType {
+  MAINTENANCE
+  GASOLINE
+  REPAIR
+  ENSURANCE
+  OTHER
 }
