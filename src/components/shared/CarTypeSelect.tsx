@@ -33,35 +33,35 @@ const columns: ColumnDef<CarType>[] = [
   },
   {
     accessorKey: "carTypeId",
-    header: "car_type_id",
+    id: "carTypeId",
   },
   {
     accessorKey: "brand",
-    header: "brand",
+    header: "Brand",
   },
   {
     accessorKey: "model",
-    header: "model",
-  },
-  {
-    accessorKey: "beginYear",
-    header: "begin_year",
-  },
-  {
-    accessorKey: "endYear",
-    header: "end_year",
+    header: "Model",
   },
   {
     accessorKey: "engine",
-    header: "engine",
+    header: "Engine, L.",
   },
   {
     accessorKey: "gasoline",
-    header: "gasoline",
+    header: "Gasoline type",
   },
   {
     accessorKey: "transmission",
-    header: "transmission",
+    header: "Transmission type",
+  },
+  {
+    accessorKey: "beginYear",
+    header: "Year of release",
+  },
+  {
+    accessorKey: "endYear",
+    header: "Year of close",
   },
 ];
 
