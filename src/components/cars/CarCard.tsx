@@ -1,7 +1,8 @@
 import { Car, CarType } from "@prisma/client";
 import { Car as CarIcon } from "lucide-react";
+import Image from "next/image";
+import car_placeholder from "../../../public/car-placeholder.png";
 import { TableCell } from "../ui/table";
-
 export const CarCard = ({ car }: { car: Car & { carType: CarType } }) => {
   const buyAt = new Date(car.buyAt);
   const formatted = `${buyAt.getFullYear()}-${
@@ -27,6 +28,50 @@ export const CarCard = ({ car }: { car: Car & { carType: CarType } }) => {
           <p>Base price: {car.price}$</p>
         </div>
       </TableCell>
+    </>
+  );
+};
+export const CarCardBig = ({ car }: { car: Car & { carType: CarType } }) => {
+  return (
+    <>
+      <h1 className="text-center text-[36px] font-medium">{`${car.carType.brand} ${car.carType.model}`}</h1>
+      <div className="grid grid-cols-4 grid-rows-4 w-full border-b">
+        <div className="text-right">
+          <p className="text-[24px]">Brand</p>
+          <p className="px-2 text-[16px]">{car.carType.brand}</p>
+        </div>
+        <div className="row-span-4 col-span-2 flex justify-center items-center">
+          <Image alt="CAR" src={car_placeholder} height={300} />
+        </div>
+        <div>
+          <p className="text-[24px]">Engine</p>
+          <p className="px-2 text-[16px]">{car.carType.engine}L</p>
+        </div>
+        <div className="text-right">
+          <p className="text-[24px]">Model</p>
+          <p className="px-2 text-[16px]">{car.carType.model}</p>
+        </div>
+        <div>
+          <p className="text-[24px]">Gasoline</p>
+          <p className="px-2 text-[16px]">{car.carType.gasoline}</p>
+        </div>
+        <div className="text-right">
+          <p className="text-[24px]">Year</p>
+          <p className="px-2 text-[16px]">{car.year}</p>
+        </div>
+        <div>
+          <p className="text-[24px]">Transmission</p>
+          <p className="px-2 text-[16px]">{car.carType.transmission}</p>
+        </div>
+        <div className="text-right">
+          <p className="text-[24px]">Mileage</p>
+          <p className="px-2 text-[16px]">{car.mileage}km</p>
+        </div>
+        <div>
+          <p className="text-[24px]">Model year</p>
+          <p className="px-2 text-[16px]">{`${car.carType.beginYear} - ${car.carType.endYear}`}</p>
+        </div>
+      </div>
     </>
   );
 };

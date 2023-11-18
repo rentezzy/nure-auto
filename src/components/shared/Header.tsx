@@ -13,7 +13,12 @@ export const Header = async () => {
   }
   return (
     <header className="border-b">
-      <div className="container mx-auto p-2 flex justify-end">
+      <div className="container mx-auto p-2 flex justify-between items-center">
+        <nav>
+          <Button variant="link" asChild>
+            <Link href="/dashboard">Dashboard</Link>
+          </Button>
+        </nav>
         <div className="flex gap-2 items-center">
           <Button variant="link" asChild>
             <Link href="/cabinet">{user?.email}</Link>

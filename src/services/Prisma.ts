@@ -30,6 +30,20 @@ export const PrismaService = {
   getCars() {
     return this.prismClient.car.findMany();
   },
+  getCar(carId: number) {
+    return this.prismClient.car.findUnique({
+      where: { carId },
+      include: {
+        carType: {
+          include: {
+            maintenance: true,
+          },
+        },
+        carSpent: true,
+        usage: true,
+      },
+    });
+  },
   getCarsByUserId(uId: number) {
     return this.prismClient.car.findMany({
       where: { userId: uId },

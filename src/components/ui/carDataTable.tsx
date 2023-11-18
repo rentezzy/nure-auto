@@ -30,6 +30,7 @@ import { useState } from "react";
 import { CarCard } from "../cars/CarCard";
 import { Button } from "./button";
 import { Input } from "./input";
+import { DataTablePagination } from "./table-elements";
 
 const columns: ColumnDef<Car & { carType: CarType }>[] = [
   {
@@ -107,81 +108,107 @@ export function CarDataTable<TData, TValue>({
   return (
     <div>
       <div>
-        <div className="flex items-center py-4 gap-2">
-          <Input
-            placeholder="Filter by name..."
-            value={
-              (table.getColumn("brandModel")?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table.getColumn("brandModel")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-          <div className="flex gap-2 items-center">
-            <Label>From:</Label>
-            <Input
-              type="number"
-              min={Number(
-                table.getColumn("year")?.getFacetedMinMaxValues()?.[0] ?? ""
-              )}
-              max={Number(
-                table.getColumn("year")?.getFacetedMinMaxValues()?.[1] ?? ""
-              )}
-              value={
-                (
-                  table.getColumn("year")?.getFilterValue() as [number, number]
-                )?.[0] ||
-                table.getColumn("year")?.getFacetedMinMaxValues()?.[0] ||
-                "1990"
-              }
-              onChange={(value) =>
-                table
-                  .getColumn("year")
-                  ?.setFilterValue((old: [number, number]) => [
-                    value.target.value,
-                    old
-                      ? old[1]
-                      : table.getColumn("year")?.getFacetedMinMaxValues()?.[1],
-                  ])
-              }
-            ></Input>
-            <Label>To:</Label>
-            <Input
-              type="number"
-              min={Number(
-                table.getColumn("year")?.getFacetedMinMaxValues()?.[0] ?? ""
-              )}
-              max={Number(
-                table.getColumn("year")?.getFacetedMinMaxValues()?.[1] ?? ""
-              )}
-              value={
-                (
-                  table.getColumn("year")?.getFilterValue() as [number, number]
-                )?.[1] ||
-                table.getColumn("year")?.getFacetedMinMaxValues()?.[1] ||
-                "2023"
-              }
-              onChange={(value) =>
-                table
-                  .getColumn("year")
-                  ?.setFilterValue((old: [number, number]) => [
-                    old
-                      ? old[0]
-                      : table.getColumn("year")?.getFacetedMinMaxValues()?.[0],
-                    value.target.value,
-                  ])
-              }
-            ></Input>
-          </div>
-        </div>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
-                className="flex justify-end items-center gap-20 pr-24"
+                className="flex items-center justify-between"
               >
+                <TableHead className="flex items-center py-4 gap-2">
+                  <Input
+                    placeholder="Filter by name..."
+                    value={
+                      (table
+                        .getColumn("brandModel")
+                        ?.getFilterValue() as string) ?? ""
+                    }
+                    onChange={(event) =>
+                      table
+                        .getColumn("brandModel")
+                        ?.setFilterValue(event.target.value)
+                    }
+                    className="max-w-sm"
+                  />
+                  <div className="flex gap-2 items-center w-[400px]">
+                    <Label>From:</Label>
+                    <Input
+                      type="number"
+                      min={Number(
+                        table
+                          .getColumn("year")
+                          ?.getFacetedMinMaxValues()?.[0] ?? ""
+                      )}
+                      max={Number(
+                        table
+                          .getColumn("year")
+                          ?.getFacetedMinMaxValues()?.[1] ?? ""
+                      )}
+                      value={
+                        (
+                          table.getColumn("year")?.getFilterValue() as [
+                            number,
+                            number
+                          ]
+                        )?.[0] ||
+                        table
+                          .getColumn("year")
+                          ?.getFacetedMinMaxValues()?.[0] ||
+                        "1990"
+                      }
+                      onChange={(value) =>
+                        table
+                          .getColumn("year")
+                          ?.setFilterValue((old: [number, number]) => [
+                            value.target.value,
+                            old
+                              ? old[1]
+                              : table
+                                  .getColumn("year")
+                                  ?.getFacetedMinMaxValues()?.[1],
+                          ])
+                      }
+                    ></Input>
+                    <Label>To:</Label>
+                    <Input
+                      type="number"
+                      min={Number(
+                        table
+                          .getColumn("year")
+                          ?.getFacetedMinMaxValues()?.[0] ?? ""
+                      )}
+                      max={Number(
+                        table
+                          .getColumn("year")
+                          ?.getFacetedMinMaxValues()?.[1] ?? ""
+                      )}
+                      value={
+                        (
+                          table.getColumn("year")?.getFilterValue() as [
+                            number,
+                            number
+                          ]
+                        )?.[1] ||
+                        table
+                          .getColumn("year")
+                          ?.getFacetedMinMaxValues()?.[1] ||
+                        "2023"
+                      }
+                      onChange={(value) =>
+                        table
+                          .getColumn("year")
+                          ?.setFilterValue((old: [number, number]) => [
+                            old
+                              ? old[0]
+                              : table
+                                  .getColumn("year")
+                                  ?.getFacetedMinMaxValues()?.[0],
+                            value.target.value,
+                          ])
+                      }
+                    ></Input>
+                  </div>
+                </TableHead>
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
@@ -226,11 +253,11 @@ export function CarDataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {/* {data.length > 1 && (
+      {data.length > 10 && (
         <div className="mt-2">
           <DataTablePagination table={table} />
         </div>
-      )} */}
+      )}
     </div>
   );
 }

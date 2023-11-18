@@ -1,9 +1,11 @@
 import { Input } from "@/components/ui/input";
+import { useGetMaintenanceByCarId } from "@/hooks/useGetCarMaintenance";
 import { useGetCarTypes } from "@/hooks/useGetCarTypesId";
 import { useGetUsersId } from "@/hooks/useGetUsersId";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Control, ControllerRenderProps } from "react-hook-form";
+import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
 import {
   FormControl,
@@ -20,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Button } from "../ui/button";
+import { Textarea } from "../ui/textarea";
 
 export const UserForm = ({ control }: { control: Control<any, any> }) => {
   return (
@@ -230,6 +232,76 @@ export const CarFormMini = ({ control }: { control: Control<any, any> }) => {
   );
 };
 
+export const CarSpentForm = ({ control }: { control: Control<any, any> }) => {
+  return (
+    <>
+      <FormField
+        control={control}
+        name="price"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Price for 1 pc.</FormLabel>
+            <FormControl>
+              <Input
+                placeholder="Price"
+                type="number"
+                {...field}
+                value={`${field.value}`}
+                onChange={(e) =>
+                  field.onChange(
+                    Number.isNaN(parseFloat(e.target.value))
+                      ? 1
+                      : parseFloat(e.target.value)
+                  )
+                }
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={control}
+        name="amount"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Amount of pc`s</FormLabel>
+            <FormControl>
+              <Input
+                placeholder="Amount"
+                type="number"
+                {...field}
+                value={`${field.value}`}
+                onChange={(e) =>
+                  field.onChange(
+                    Number.isNaN(parseFloat(e.target.value))
+                      ? 1
+                      : parseFloat(e.target.value)
+                  )
+                }
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={control}
+        name="description"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Description of spent</FormLabel>
+            <FormControl>
+              <Textarea placeholder="Description" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </>
+  );
+};
+
 export const CarTypeBrandSelect = <T extends string>({
   field,
 }: {
@@ -411,5 +483,39 @@ export const CarTypeForm = ({ control }: { control: Control<any, any> }) => {
         )}
       />
     </>
+  );
+};
+
+export const MaintenanceSelect = <T extends string>({
+  field,
+  carId,
+}: {
+  field: ControllerRenderProps<any, T>;
+  carId: number;
+}) => {
+  const maintenance = useGetMaintenanceByCarId(carId);
+  return (
+    <FormItem>
+      <FormLabel>Select maintenance</FormLabel>
+      <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <FormControl>
+          <SelectTrigger className="w-full">
+            <SelectValue />
+          </SelectTrigger>
+        </FormControl>
+        <SelectContent>
+          {maintenance &&
+            maintenance.map((maintenance) => (
+              <SelectItem
+                key={maintenance.maintenanceId}
+                value={`${maintenance.maintenanceId}`}
+              >
+                {maintenance.condition} km.
+              </SelectItem>
+            ))}
+        </SelectContent>
+      </Select>
+      <FormMessage />
+    </FormItem>
   );
 };
