@@ -63,7 +63,7 @@ model Maintenance {
   maintenanceId Int    @id @default(autoincrement()) @map("maintenance_id")
   condition     Int
   price         Int
-  decription    String
+  description   String
 
   carType   CarType    @relation(fields: [carTypeId], references: [carTypeId], onUpdate: Cascade, onDelete: Cascade)
   carTypeId Int        @map("car_type_id")
@@ -75,7 +75,7 @@ model Maintenance {
 model CarSpent {
   carSpentId    Int          @id @default(autoincrement()) @map("car_spent_id")
   type          SpentType
-  price         Int
+  price         Float
   amount        Int
   description   String
   date          DateTime

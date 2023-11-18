@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Plus } from "lucide-react";
 import { useState } from "react";
 import { AddCarSpentForm } from "./AddCarSpentForm";
 
@@ -17,7 +18,10 @@ export function AddCarSpentModal({ carId }: { carId: number }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">Add car spent</Button>
+        <Button variant="outline">
+          <Plus />
+          Add car spent
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

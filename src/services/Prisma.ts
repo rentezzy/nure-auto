@@ -61,6 +61,13 @@ export const PrismaService = {
   getCarTypesId() {
     return this.prismClient.carType.findMany({ select: { carTypeId: true } });
   },
+  getMaintenance(maintenanceId: number) {
+    return this.prismClient.maintenance.findUnique({
+      where: {
+        maintenanceId,
+      },
+    });
+  },
   addUser(user: Omit<User, "userId">) {
     return this.prismClient.user.create({
       data: user,

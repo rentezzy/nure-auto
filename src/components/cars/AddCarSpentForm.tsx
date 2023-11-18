@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
+import { addCarSpent } from "@/services/server-actions/carSpent";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SelectValue } from "@radix-ui/react-select";
 import { CalendarIcon } from "lucide-react";
@@ -81,8 +82,19 @@ export const AddCarSpentForm = ({
     }
   }, [watchSelectedType]);
   async function onSubmit(values: z.infer<typeof carSpentFormSchema>) {
+    if (values.type === "MAINTENANCE" && !values.maintenanceId) {
+      form.setError("maintenanceId", {
+        message: "You must specify the maintenance",
+      });
+      return;
+    }
     try {
-      console.log(values);
+      await addCarSpent({
+        ...values,
+        maintenanceId: values.maintenanceId
+          ? parseInt(values.maintenanceId)
+          : null,
+      });
       onSuccess();
       form.reset();
     } catch (error) {}
