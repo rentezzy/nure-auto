@@ -48,8 +48,8 @@ model CarType {
   carTypeId    Int           @id @default(autoincrement()) @map("car_type_id")
   brand        String
   model        String
-  beginYear    Int
-  endYear      Int
+  beginYear    Int           @map("begin_year")
+  endYear      Int           @map("end_year")
   engine       Float
   transmission Transmission
   gasoline     Gasoline

@@ -1,6 +1,6 @@
+"use client";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -8,23 +8,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  useGetCarById,
-  useGetCarTypeById,
-  useGetUserById,
-} from "@/hooks/useGet";
-import { Pencil, Trash } from "lucide-react";
-import { Button } from "../ui/button";
-import { EditCarTypeForm } from "./EditForm";
-import { useState } from "react";
-import { useToast } from "../ui/use-toast";
+import { useGetCarTypeById, useGetUserById } from "@/hooks/useGet";
 import {
   deleteCar,
   deleteCarType,
   deleteUser,
 } from "@/services/server-actions/deleteRow";
-import { UserTable } from "../tables/UserTable";
+import { Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Button } from "../ui/button";
 import { DataTable } from "../ui/dataTable";
+import { useToast } from "../ui/use-toast";
 
 export const UserDeleteForm = ({ id }: { id?: string }) => {
   const { toast } = useToast();
@@ -80,19 +75,19 @@ export const UserDeleteForm = ({ id }: { id?: string }) => {
     </Dialog>
   );
 };
-export const CarDeleteForm = ({ id }: { id?: string }) => {
+export const CarDeleteForm = ({ id, name }: { id: number; name: string }) => {
   const { toast } = useToast();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const car = useGetCarById(id);
-  if (!id) return;
   const onClick = async () => {
     try {
-      deleteCar(parseFloat(id));
+      deleteCar(id);
       toast({
         title: "Delete successful",
-        description: `Car with id :${id} successfuly deleted.`,
+        description: `${name} successfully deleted.`,
       });
       setIsOpen(false);
+      router.push("/dashboard");
     } catch (error) {
       toast({
         variant: "destructive",
@@ -102,30 +97,24 @@ export const CarDeleteForm = ({ id }: { id?: string }) => {
     }
   };
   return (
-    <Dialog open={isOpen} onOpenChange={(e) => setIsOpen((prev) => !prev)}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="destructive" className="w-[30px] h-[30px] p-0">
-          <Trash />
+        <Button variant="ghost" className="w-[30px] h-[30px] p-0">
+          <Trash color="#ef4444" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[800px]">
+      <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete car with id:{id}</DialogTitle>
+          <DialogTitle>Delete {name}?</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete this car?
+            Are you sure you want to delete this car?{" "}
+            <strong className="text-destructive">
+              This action can&apos;t be undone!
+            </strong>
           </DialogDescription>
-          {car && (
-            <DataTable
-              data={[car]}
-              columns={Object.keys(car).map((carKey) => ({
-                accessorKey: carKey,
-                header: carKey,
-              }))}
-            />
-          )}
         </DialogHeader>
         <DialogFooter>
-          <Button onClick={onClick} variant="destructive">
+          <Button onClick={onClick} variant="destructive" className="w-full">
             Delete
           </Button>
         </DialogFooter>
@@ -166,8 +155,8 @@ export const CarTypeDeleteForm = ({ id }: { id?: string }) => {
         <DialogHeader>
           <DialogTitle>Delete car type with id:{id}</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete this car type? All cars with this types will also be
-            removed.
+            Are you sure you want to delete this car type? All cars with this
+            types will also be removed.
           </DialogDescription>
           {carType && (
             <DataTable

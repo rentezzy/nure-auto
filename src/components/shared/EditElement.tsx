@@ -1,19 +1,16 @@
+"use client";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useGetCarTypeById, useGetUserById } from "@/hooks/useGet";
+import { Car } from "@prisma/client";
 import { Pencil } from "lucide-react";
 import { Button } from "../ui/button";
 import { EditCarForm, EditCarTypeForm, EditUserForm } from "./EditForm";
-import {
-  useGetCarById,
-  useGetCarTypeById,
-  useGetUserById,
-} from "@/hooks/useGet";
 
 export const UserEditForm = ({ id }: { id?: string }) => {
   const user = useGetUserById(id);
@@ -34,19 +31,17 @@ export const UserEditForm = ({ id }: { id?: string }) => {
     </Dialog>
   );
 };
-export const CarEditForm = ({ id }: { id?: string }) => {
-  const car = useGetCarById(id);
-  if (!id) return;
+export const CarEditForm = ({ car }: { car: Car }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="p-0 w-[30px] h-[30px]">
+        <Button className="p-0 w-[30px] h-[30px]" variant="ghost">
           <Pencil />
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit car with id:{id}</DialogTitle>
+          <DialogTitle>Edit car</DialogTitle>
         </DialogHeader>
         {car && <EditCarForm car={car} />}
       </DialogContent>

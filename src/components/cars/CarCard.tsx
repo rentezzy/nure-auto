@@ -2,6 +2,8 @@ import { Car, CarType } from "@prisma/client";
 import { Car as CarIcon } from "lucide-react";
 import Image from "next/image";
 import car_placeholder from "../../../public/car-placeholder.png";
+import { CarDeleteForm } from "../shared/DeleteElement";
+import { CarEditForm } from "../shared/EditElement";
 import { TableCell } from "../ui/table";
 export const CarCard = ({ car }: { car: Car & { carType: CarType } }) => {
   const buyAt = new Date(car.buyAt);
@@ -32,9 +34,14 @@ export const CarCard = ({ car }: { car: Car & { carType: CarType } }) => {
   );
 };
 export const CarCardBig = ({ car }: { car: Car & { carType: CarType } }) => {
+  const name = `${car.carType.brand} ${car.carType.model}`;
   return (
     <>
-      <h1 className="text-center text-[36px] font-medium">{`${car.carType.brand} ${car.carType.model}`}</h1>
+      <div className="justify-center flex items-center gap-2">
+        <h1 className="text-center text-[36px] font-medium">{name}</h1>
+        <CarEditForm car={car} />
+        <CarDeleteForm id={car.carId} name={name} />
+      </div>
       <div className="grid grid-cols-4 grid-rows-4 w-full border-b">
         <div className="text-right">
           <p className="text-[24px]">Brand</p>

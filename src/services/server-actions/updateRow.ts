@@ -18,7 +18,7 @@ export const updateUser = async (
     return Promise.reject("Error");
   }
 };
-export const updateCar = async (carId: number, car: Omit<Car, "carId">) => {
+export const updateCar = async (carId: number, car: Omit<Car, "carId"|"carTypeId"|"userId">) => {
   try {
     return await PrismaService.prismClient.car.update({
       where: {

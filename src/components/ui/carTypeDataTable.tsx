@@ -32,6 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./select";
+import { DataTablePagination } from "./table-elements";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -359,11 +360,11 @@ export function CarTypeDataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {/* {data.length > 1 && (
+      {data.length > 10 && (
         <div className="mt-2">
           <DataTablePagination table={table} />
         </div>
-      )} */}
+      )}
     </div>
   );
 }

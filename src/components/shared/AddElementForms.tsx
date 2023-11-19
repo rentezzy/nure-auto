@@ -6,7 +6,7 @@ import { addCar, addCarType, addUser } from "@/services/server-actions/addRow";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { CarForm, CarTypeForm, UserForm } from "./FormCommon";
+import { CarTypeForm, UserForm } from "./FormCommon";
 
 const userFormSchema = z
   .object({
@@ -76,7 +76,7 @@ export const AddCarForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <CarForm control={form.control} />
+        {/* <CarForm control={form.control} /> */}
         <Button type="submit">Create Car</Button>
       </form>
     </Form>

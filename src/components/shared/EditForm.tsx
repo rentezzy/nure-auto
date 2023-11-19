@@ -1,3 +1,4 @@
+import { useGetCarTypeById } from "@/hooks/useGet";
 import {
   updateCar,
   updateCarType,
@@ -5,12 +6,13 @@ import {
 } from "@/services/server-actions/updateRow";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Car, CarType, User } from "@prisma/client";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "../ui/button";
 import { Form } from "../ui/form";
 import { useToast } from "../ui/use-toast";
-import { CarForm, CarTypeForm, UserForm } from "./FormCommon";
+import { CarFormMini, CarTypeForm, UserForm } from "./FormCommon";
 
 const userFormSchema = z.object({
   email: z.string().min(2).max(50).email("Must be email"),
@@ -48,14 +50,13 @@ export const EditUserForm = ({ user }: { user: User }) => {
 };
 const carFormSchema = z.object({
   buyAt: z.date().max(new Date()),
-  carTypeId: z.string(),
   mileage: z.number().min(0).max(1_000_000),
   year: z.number().min(1920).max(2023),
-  userId: z.string(),
   price: z.number().min(1).max(1_000_000_000),
 });
 export const EditCarForm = ({ car }: { car: Car }) => {
   const { toast } = useToast();
+  const router = useRouter();
   const form = useForm<z.infer<typeof carFormSchema>>({
     resolver: zodResolver(carFormSchema),
     defaultValues: {
@@ -63,28 +64,32 @@ export const EditCarForm = ({ car }: { car: Car }) => {
       mileage: car.mileage,
       price: car.price,
       year: car.year,
-      carTypeId: String(car.carTypeId),
-      userId: String(car.userId),
     },
   });
+  const carType = useGetCarTypeById(car.carTypeId.toString());
+  const yearFrom = carType?.beginYear || 1920;
+  const yearTo = carType?.endYear || 2023;
   async function onSubmit(values: z.infer<typeof carFormSchema>) {
     try {
-      await updateCar(car.carId, {
-        ...values,
-        carTypeId: +values.carTypeId,
-        userId: +values.userId,
-      });
+      await updateCar(car.carId, values);
       toast({
         title: "Car update.",
-        description: "Car successfuly updated.",
+        description: "Car successfully updated.",
       });
+      router.refresh();
     } catch (error) {}
   }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <CarForm control={form.control} />
-        <Button type="submit">Update car</Button>
+        <CarFormMini
+          control={form.control}
+          yearFrom={yearFrom}
+          yearTo={yearTo}
+        />
+        <Button type="submit" className="w-full">
+          Update car
+        </Button>
       </form>
     </Form>
   );

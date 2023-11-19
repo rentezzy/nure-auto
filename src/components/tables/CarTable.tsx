@@ -3,7 +3,6 @@ import { Car } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { CarEditForm } from "../shared/EditElement";
 import { Button } from "../ui/button";
 import { DataTable } from "../ui/dataTable";
 import { CarDeleteForm } from "../shared/DeleteElement";
@@ -51,8 +50,8 @@ const columns: ColumnDef<Car>[] = [
 
       return (
         <div className="flex justify-end items-center gap-2">
-          <CarEditForm id={id} />
-          <CarDeleteForm id={id} />
+          {/* <CarEditForm id={id} /> */}
+          {/* <CarDeleteForm id={id} /> */}
           <Button variant="link" asChild>
             <Link href={`/car/${id}`}>
               <ChevronRight />

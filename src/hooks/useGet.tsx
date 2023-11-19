@@ -25,6 +25,6 @@ export const useGetCarTypeById = (id?: string) => {
     fetch(`/api/car-type/${id}`)
       .then((res) => res.json())
       .then((res) => setCarType(res.carType));
-  }, []);
+  }, [id]);
   return carType;
 };

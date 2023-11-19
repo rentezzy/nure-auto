@@ -1,7 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { useGetMaintenanceByCarId } from "@/hooks/useGetCarMaintenance";
 import { useGetCarTypes } from "@/hooks/useGetCarTypesId";
-import { useGetUsersId } from "@/hooks/useGetUsersId";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Control, ControllerRenderProps } from "react-hook-form";
@@ -57,75 +56,15 @@ export const UserForm = ({ control }: { control: Control<any, any> }) => {
   );
 };
 
-export const CarForm = ({ control }: { control: Control<any, any> }) => {
-  const usersId = useGetUsersId();
-  const carTypesId = useGetCarTypes();
-  return (
-    <>
-      <CarFormMini control={control} />
-      <FormField
-        control={control}
-        name="userId"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>User Id</FormLabel>
-            <Select
-              onValueChange={field.onChange}
-              defaultValue={`${field.value}`}
-            >
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a user id" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                {usersId &&
-                  usersId.map((userId) => (
-                    <SelectItem key={userId.userId} value={`${userId.userId}`}>
-                      {userId.userId}
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={control}
-        name="carTypeId"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Car type Id</FormLabel>
-            <Select
-              onValueChange={field.onChange}
-              defaultValue={`${field.value}`}
-            >
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a car type id" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                {carTypesId &&
-                  carTypesId.map((carTypeId) => (
-                    <SelectItem
-                      key={carTypeId.carTypeId}
-                      value={`${carTypeId.carTypeId}`}
-                    >
-                      {carTypeId.carTypeId}
-                    </SelectItem>
-                  ))}
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-    </>
-  );
-};
-export const CarFormMini = ({ control }: { control: Control<any, any> }) => {
+export const CarFormMini = ({
+  control,
+  yearFrom,
+  yearTo,
+}: {
+  control: Control<any, any>;
+  yearFrom: number;
+  yearTo: number;
+}) => {
   return (
     <>
       <FormField
@@ -157,6 +96,8 @@ export const CarFormMini = ({ control }: { control: Control<any, any> }) => {
               <Input
                 placeholder="Year"
                 type="number"
+                min={yearFrom}
+                max={yearTo}
                 {...field}
                 onChange={(e) => field.onChange(+e.target.value)}
                 value={field.value}

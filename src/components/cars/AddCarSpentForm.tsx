@@ -143,7 +143,7 @@ export const AddCarSpentForm = ({
           name="date"
           render={({ field }) => (
             <FormItem className="flex flex-col mt-2">
-              <FormLabel>Buy at</FormLabel>
+              <FormLabel>Spent at</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
