@@ -15,7 +15,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useLayoutEffect } from "react";
 import { AddElement } from "../shared/AddElement";
 import { DataTablePagination } from "./table-elements";
 
@@ -34,7 +33,6 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-  useLayoutEffect(() => table.setPageSize(5), []);
   return (
     <div>
       <div className="rounded-md border">
