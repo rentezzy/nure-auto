@@ -12,12 +12,15 @@ const Dashboard = async () => {
   const cars = await PrismaService.getCarsByUserId(user.userId);
   return (
     <section className="container mx-auto space-x-2">
-      <div className="w-full py-4">
-        <Button variant="link" asChild>
+      <div className="w-full py-4 flex gap-2">
+        <Button variant="ghost" asChild>
           <Link href="/create-car">
             <Plus />
             Add new car
           </Link>
+        </Button>
+        <Button variant="ghost" asChild>
+          <Link href="/stats">Statistic</Link>
         </Button>
       </div>
       <div>
