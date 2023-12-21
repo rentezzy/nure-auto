@@ -11,6 +11,8 @@ export const NotificationCard = ({
   notification: Notification;
 }) => {
   const router = useRouter();
+  const [message, carId] = notification.text.split("....");
+
   const { toast } = useToast();
   const onClick = async () => {
     try {
@@ -31,7 +33,12 @@ export const NotificationCard = ({
   return (
     <div className="w-full border rounded-md p-4 relative">
       <h4 className="font-medium">{notification.title}</h4>
-      <p className="px-2">{notification.text}</p>
+      <p
+        className="px-2 hover:underline hover:cursor-pointer"
+        onClick={() => router.push(`/my-car/${carId}`)}
+      >
+        {message}.
+      </p>
       <Button
         variant="ghost"
         className="w-[30px] h-[30px] p-0 absolute top-2 right-2"

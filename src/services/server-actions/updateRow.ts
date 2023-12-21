@@ -2,6 +2,7 @@
 
 import { Car, CarType, User } from "@prisma/client";
 import { PrismaService } from "../Prisma";
+import { checkNotification } from "../notification";
 
 export const updateUser = async (
   userId: number,
@@ -18,14 +19,18 @@ export const updateUser = async (
     return Promise.reject("Error");
   }
 };
-export const updateCar = async (carId: number, car: Omit<Car, "carId"|"carTypeId"|"userId">) => {
+export const updateCar = async (
+  carId: number,
+  car: Omit<Car, "carId" | "carTypeId" | "userId">
+) => {
   try {
-    return await PrismaService.prismClient.car.update({
+    await PrismaService.prismClient.car.update({
       where: {
         carId,
       },
       data: car,
     });
+    return checkNotification(carId, car.mileage);
   } catch (error) {
     return Promise.reject("Error");
   }

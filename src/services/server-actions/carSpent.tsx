@@ -2,6 +2,7 @@
 
 import { CarSpent, Gasoline, Usage } from "@prisma/client";
 import { PrismaService } from "../Prisma";
+import { checkNotification } from "../notification";
 
 const gasolinePrice: Record<Gasoline, number> = {
   D: 1.54,
@@ -61,6 +62,7 @@ export const addWeeklyCarSpent = async (usage: Omit<Usage, "usageId">) => {
     if (!gasolineType) {
       return Promise.reject("Error");
     }
+    await checkNotification(usage.carId, usage.mileage + gasolineType.mileage);
     return PrismaService.prismClient.$transaction([
       PrismaService.prismClient.usage.create({
         data: usage,
