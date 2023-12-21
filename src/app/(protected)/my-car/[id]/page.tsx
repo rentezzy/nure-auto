@@ -17,7 +17,11 @@ export default async function Page({ params }: { params: { id: string } }) {
         <AddCarSpentModal carId={parseInt(params.id)} />
         <AddWeeklySpentModal carId={parseInt(params.id)} carUsage={car.usage} />
       </div>
-      <CarSpentDataTable data={car.carSpent} />
+      <CarSpentDataTable
+        data={car.carSpent.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        )}
+      />
     </div>
   );
 }

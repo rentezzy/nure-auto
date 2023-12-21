@@ -34,3 +34,12 @@ export const deleteNotification = async (notificationId: number) => {
     return Promise.reject("Error");
   }
 };
+export const deleteCarSpent = async (carSpentId: number) => {
+  try {
+    return await PrismaService.prismClient.carSpent.delete({
+      where: { carSpentId },
+    });
+  } catch (error) {
+    return Promise.reject("Error");
+  }
+};

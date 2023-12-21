@@ -1,6 +1,6 @@
 "use server";
 
-import { Car, CarType, User } from "@prisma/client";
+import { Car, CarSpent, CarType, User } from "@prisma/client";
 import { PrismaService } from "../Prisma";
 import { checkNotification } from "../notification";
 
@@ -45,6 +45,21 @@ export const updateCarType = async (
         carTypeId,
       },
       data: carType,
+    });
+  } catch (error) {
+    return Promise.reject("Error");
+  }
+};
+export const updateSpent = async (
+  carSpentId: number,
+  carSpent: Omit<CarSpent, "carId" | "carSpentId">
+) => {
+  try {
+    await PrismaService.prismClient.carSpent.update({
+      where: {
+        carSpentId,
+      },
+      data: carSpent,
     });
   } catch (error) {
     return Promise.reject("Error");
