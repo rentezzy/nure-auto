@@ -61,7 +61,6 @@ export const addWeeklyCarSpent = async (usage: Omit<Usage, "usageId">) => {
     if (!gasolineType) {
       return Promise.reject("Error");
     }
-    console.log(gasolinePrice[gasolineType.carType.gasoline]);
     return PrismaService.prismClient.$transaction([
       PrismaService.prismClient.usage.create({
         data: usage,

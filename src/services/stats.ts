@@ -1,5 +1,6 @@
 import { getCurrentWeekAndYear } from "@/lib/utils";
 import { PrismaService } from "./Prisma";
+import { SpentType } from "@prisma/client";
 export const getMileageByMonth = async (userId: number) => {
   const time = getCurrentWeekAndYear();
   const weeklySpent = await PrismaService.prismClient.car.findMany({
@@ -98,4 +99,62 @@ export const getCarSpentFromPrice = async () => {
     ])
     .sort((a, b) => a[0] - b[0]);
   return res as [number, number][];
+};
+export const getCarTypeSpent = async () => {
+  const carTypes = await PrismaService.prismClient.carType.findMany({
+    select: {
+      brand: true,
+      model: true,
+      car: {
+        select: {
+          carSpent: {
+            select: {
+              amount: true,
+              type: true,
+              price: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  const rawCarTypes = carTypes.map((carType) => ({
+    name: `${carType.brand} ${carType.model}`,
+    spent: carType.car.reduce(
+      (acc, car) => {
+        const res = car.carSpent.reduce(
+          (acc, spent) => {
+            acc[spent.type] += spent.amount * spent.price;
+            return acc;
+          },
+          {
+            GASOLINE: 0,
+            INSURANCE: 0,
+            MAINTENANCE: 0,
+            OTHER: 0,
+            REPAIR: 0,
+          } as Record<SpentType, number>
+        );
+        for (const key in acc) {
+          acc[key as keyof typeof acc] += res[key as keyof typeof acc];
+        }
+        return acc;
+      },
+      {
+        GASOLINE: 0,
+        INSURANCE: 0,
+        MAINTENANCE: 0,
+        OTHER: 0,
+        REPAIR: 0,
+      } as Record<SpentType, number>
+    ),
+  }));
+  return rawCarTypes.filter(
+    (carType) =>
+      carType.spent.GASOLINE ||
+      carType.spent.INSURANCE ||
+      carType.spent.MAINTENANCE ||
+      carType.spent.OTHER ||
+      carType.spent.REPAIR
+  );
 };

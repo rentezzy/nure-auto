@@ -3,7 +3,6 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -15,7 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DataTablePagination } from "./table-elements";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -30,7 +28,6 @@ export function DataTableSimple<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   });
   return (
     <div>
@@ -85,11 +82,6 @@ export function DataTableSimple<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {data.length > 10 && (
-        <div className="mt-2">
-          <DataTablePagination table={table} />
-        </div>
-      )}
     </div>
   );
 }

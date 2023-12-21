@@ -1,6 +1,6 @@
+import LinePlot from "@/components/stats/CarSpentChart";
 import { CarTypesCount } from "@/components/tables/CarTypesCount";
 import { CarsWithTotalTable } from "@/components/tables/CarsWithTotal";
-import LinePlot from "@/components/ui/d3chart";
 import { Separator } from "@/components/ui/separator";
 import { getUser } from "@/services/getUser";
 import {
@@ -25,20 +25,23 @@ const Statistic = async () => {
         <p>Mileage this month: {mileageByMonth}km</p>
       </div>
       <Separator className="my-4" />
-      <div className="max-w-[800px]">
-        Total spent&apos;s for each of your cars.
-        <CarsWithTotalTable carsWithTotal={carsWithTotalSpent} />
+      <div className="flex gap-4">
+        <div className="basis-1/2">
+          Total spent&apos;s for each of your cars.
+          <CarsWithTotalTable carsWithTotal={carsWithTotalSpent} />
+        </div>
+        <div className="basis-1/2">
+          Cars by popularity.
+          <CarTypesCount carTypesCount={carTypesCount} />
+        </div>
       </div>
-      <Separator className="my-4" />
-      <div className="max-w-[800px]">
-        Cars by popularity.
-        <CarTypesCount carTypesCount={carTypesCount} />
-      </div>
+
       <Separator className="my-4" />
       <div>
         <p>Car spent(in$) from base car price(in 1000$)</p>
         <LinePlot data={carSpentFromPrice} />
       </div>
+      <Separator className="my-4" />
     </section>
   );
 };

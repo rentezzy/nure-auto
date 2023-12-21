@@ -22,6 +22,12 @@ const Dashboard = async () => {
         <Button variant="ghost" asChild>
           <Link href="/stats">Statistic</Link>
         </Button>
+        <Button variant="ghost" asChild>
+          <Link href="/reports/1">Report 1</Link>
+        </Button>
+        <Button variant="ghost" asChild>
+          <Link href="/reports/2">Report 2</Link>
+        </Button>
       </div>
       <div>
         {cars.length === 0 ? <p>No cars yet</p> : <CarDataTable data={cars} />}
