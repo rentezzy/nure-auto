@@ -27,7 +27,9 @@ export default function RoadAccidentChart({
         ],
       },
       options: {
-        responsive: true,
+        // responsive: true,
+        // maintainAspectRatio: false,
+
         scales: {
           y: {
             title: {
@@ -47,5 +49,16 @@ export default function RoadAccidentChart({
     return () => chart.destroy();
   }, [ref, data, label]);
 
-  return <canvas ref={ref} id="svgChartBlock"></canvas>;
+  return (
+    <canvas
+      ref={ref}
+      id="svgChartBlock"
+      // width="400px"
+      // height="400px"
+      // style={{
+      //   width: "400px !important",
+      //   height: "400px !important",
+      // }}
+    ></canvas>
+  );
 }

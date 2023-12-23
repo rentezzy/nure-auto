@@ -65,8 +65,14 @@ const columns: ColumnDef<CarType>[] = [
   },
 ];
 
-export const CarTypeSelect = ({ control }: { control: Control<any, any> }) => {
-  const carTypes = useGetCarTypes();
+export const CarTypeSelect = ({
+  control,
+  carTypeId,
+}: {
+  control: Control<any, any>;
+  carTypeId: number;
+}) => {
+  const carTypes = useGetCarTypes(carTypeId)?.reverse();
   return (
     <FormField
       control={control}

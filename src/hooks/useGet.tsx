@@ -21,10 +21,12 @@ export const useGetCarById = (id?: string) => {
 };
 export const useGetCarTypeById = (id?: string) => {
   const [carType, setCarType] = useState<CarType | null>(null);
+
   useEffect(() => {
+    if (!id) return;
     fetch(`/api/car-type/${id}`)
       .then((res) => res.json())
       .then((res) => setCarType(res.carType));
   }, [id]);
-  return carType;
+  return id ? carType : undefined;
 };

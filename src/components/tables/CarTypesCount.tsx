@@ -2,19 +2,16 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableSimple } from "../ui/dataTableSimple";
 type CarTypesCount = {
-  brand: string;
-  model: string;
-  _count: {
-    car: number;
-  };
+  name: string;
+  total: bigint;
 };
 const columns: ColumnDef<CarTypesCount>[] = [
   {
-    accessorFn: (row) => `${row.brand} ${row.model}`,
+    accessorKey: "name",
     header: "Car",
   },
   {
-    accessorFn: (row) => row._count.car,
+    accessorFn: (row) => row.total.toString(),
     header: "Total",
   },
 ];

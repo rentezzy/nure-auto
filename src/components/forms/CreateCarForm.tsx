@@ -65,7 +65,7 @@ export const CreateCarForm = ({ uid }: { uid: number }) => {
             yearTo={yearTo}
           />
         </div>
-        <CarTypeSelect control={form.control} />
+        <CarTypeSelect control={form.control} carTypeId={carTypeId}/>
         <Button type="submit" className="w-full">
           Add car!
         </Button>

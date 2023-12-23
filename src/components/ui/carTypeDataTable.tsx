@@ -33,6 +33,7 @@ import {
   SelectValue,
 } from "./select";
 import { DataTablePagination } from "./table-elements";
+import { CreateCarTypeModalHOC } from "../forms/CreateCarTypeModal";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -80,7 +81,6 @@ export function CarTypeDataTable<TData, TValue>({
     }
     onChange(-1);
   }, [rowSelection]);
-
   useEffect(() => {
     if (selected === -1) {
       setRowSelection({});
@@ -326,6 +326,15 @@ export function CarTypeDataTable<TData, TValue>({
                         )}
                   </TableHead>
                 ))}
+                <TableHead>
+                  <CreateCarTypeModalHOC
+                    carTypeId={selected}
+                    onSuccess={(id) => {
+                      onChange(id);
+                      setRowSelection({ id: true });
+                    }}
+                  />
+                </TableHead>
               </TableRow>
             ))}
           </TableHeader>
